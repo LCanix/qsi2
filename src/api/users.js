@@ -1,6 +1,11 @@
 import express from 'express';
 import jwt from 'jwt-simple';
-import { createUser, loginUser } from '../business/users';
+import {
+  createUser,
+  loginUser,
+  deleteUser,
+  updateUser,
+} from '../business/users';
 import logger from '../logger';
 
 export const apiUsers = express.Router();
@@ -98,3 +103,36 @@ apiUsersProtected.get('/', (req, res) =>
     message: 'user logged in',
   })
 );
+
+apiUsersProtected.put('/', (req, res) => {
+  updateUser(req.user)
+    .then(user =>
+      res.status(200).send({
+        success: true,
+        profile: user,
+        message: `user updated !`,
+      })
+    )
+    .catch(err =>
+      res.status(400).send({
+        success: false,
+        message: `${err.name} : ${err.message}`,
+      })
+    );
+});
+
+apiUsersProtected.delete('/', (req, res) => {
+  deleteUser(req.user)
+    .then(
+      res.status(200).send({
+        success: true,
+        message: 'Your account is deleted',
+      })
+    )
+    .catch(err =>
+      res.status(400).send({
+        success: false,
+        message: `${err.name} : ${err.message}`,
+      })
+    );
+});
