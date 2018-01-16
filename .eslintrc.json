@@ -4,5 +4,9 @@
   "env": {
     "jest": true,
     "node": true
+  },
+  "rules": {
+    "linebreak-style": ["error", "windows"],
+    "no-console": 0
   }
 }
