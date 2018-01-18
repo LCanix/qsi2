@@ -49,6 +49,8 @@
     "prettier-eslint": "^8.7.4"
   },
   "dependencies": {
+    "@types/express-serve-static-core": "^4.11.0",
+    "@types/sequelize": "^4.27.2",
     "bcrypt": "^1.0.3",
     "express": "^4.16.2",
     "jwt-simple": "^0.5.1",

@@ -105,7 +105,13 @@ apiUsersProtected.get('/', (req, res) =>
 );
 
 apiUsersProtected.put('/', (req, res) => {
-  updateUser(req.user)
+  updateUser({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    password: req.body.password,
+    id: req.user.id,
+  })
     .then(user =>
       res.status(200).send({
         success: true,
@@ -122,7 +128,7 @@ apiUsersProtected.put('/', (req, res) => {
 });
 
 apiUsersProtected.delete('/', (req, res) => {
-  deleteUser(req.user)
+  deleteUser(req.user.id)
     .then(
       res.status(200).send({
         success: true,

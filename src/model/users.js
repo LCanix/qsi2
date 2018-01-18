@@ -65,10 +65,20 @@ export default (sequelize, DataTypes) => {
       ],
     }
   );
+  // Users.associate = function(models) {
+  //   models.Users.hasMany(models.Stories);
+  // };
 
   // we don't want to send password even if crypted
   Users.excludeAttributes = ['hash'];
-
+  // we don't want to expose internal information to another app
+  Users.excludeAttributesForResponse = [
+    'id',
+    'hash',
+    'createdAt',
+    'updatedAt',
+    'deletedAt',
+  ];
   // anonymous function mandatody to access this in instance method
   /* eslint func-names:off */
   Users.prototype.comparePassword = function(password) {

@@ -61,19 +61,33 @@ export function getUser({ id }) {
 
 export function deleteUser({ id }) {
   return Users.destroy({
+    // TODO : retirer force : true pour faire un delete logique
     force: true,
     where: {
       id,
     },
-  }).then(user => {
-    logger.info(`User ${user} is deleted`);
-    return user;
+  }).then(deletedUser => {
+    logger.info(`User ${deletedUser} is deleted`);
+    return _.omit(
+      deletedUser.get({
+        plain: true,
+      }),
+      deletedUser.excludeAttributesForResponse
+    );
   });
 }
 
 export function updateUser(user) {
-  return Users.update(user, { where: { id: user.id } }).then(modifiedUser => {
-    logger.info(`modifiedUser ${modifiedUser}`);
-    return Users.findById(user.id);
+  return Users.update(user, {
+    where: { id: user.id },
+    returning: true,
+  }).then(result => {
+    const modifiedUser = result[1][0];
+    return _.omit(
+      modifiedUser.get({
+        plain: true,
+      }),
+      Users.excludeAttributesForResponse
+    );
   });
 }
