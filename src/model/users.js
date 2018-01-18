@@ -65,10 +65,10 @@ export default (sequelize, DataTypes) => {
       ],
     }
   );
-  // Users.associate = function(models) {
-  //   models.Users.hasMany(models.Stories);
-  // };
 
+  Users.associate = function(models) {
+    models.Users.hasMany(models.Stories);
+  };
   // we don't want to send password even if crypted
   Users.excludeAttributes = ['hash'];
   // we don't want to expose internal information to another app

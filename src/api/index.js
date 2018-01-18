@@ -1,5 +1,6 @@
 import express from 'express';
 import { apiUsers, apiUsersProtected } from './users';
+import apiStoriesProtected from './stories';
 import { isAuthenticated, initAuth } from '../business/auth';
 
 const api = express();
@@ -12,6 +13,7 @@ apiRoutes
   // api bellow this middelware require Authorization
   .use(isAuthenticated)
   .use('/users', apiUsersProtected)
+  .use('/stories', apiStoriesProtected)
   .use((err, req, res, next) => {
     res.status(403).send({
       success: false,
