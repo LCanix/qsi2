@@ -1,5 +1,4 @@
 import { Stories } from '../model';
-import logger from '../logger';
 
 export function createStories(stories) {
   return Stories.create({

@@ -70,23 +70,39 @@ apiStoriesProtected.put('/:id', (req, res) =>
     shortText: req.body.shortText,
     fullText: req.body.fullText,
     metaDatas: req.body.metaDatas,
-  }).then(story => {
-    const ommitedStory = _.omit(story, ['UserId', 'User.id']);
-    res.status(200).send({
-      success: true,
-      profile: ommitedStory,
-      message: 'Story updated',
-    });
   })
+    .then(story => {
+      const ommitedStory = _.omit(story, ['UserId', 'User.id']);
+      res.status(200).send({
+        success: true,
+        profile: ommitedStory,
+        message: 'Story updated',
+      });
+    })
+    .catch(err => {
+      logger.error(`💥 Failed to update story : ${err.stack}`);
+      return res.status(500).send({
+        success: false,
+        message: `${err.name} : ${err.message}`,
+      });
+    })
 );
 
 apiStoriesProtected.delete('/:id', (req, res) =>
-  deleteStory(req.params.id).then(story => {
-    const ommitedStory = _.omit(story, ['UserId', 'User.id']);
-    logger.info(ommitedStory);
-    res.status(200).send({
-      success: true,
-      message: 'Story deleted',
-    });
-  })
+  deleteStory(req.params.id)
+    .then(story => {
+      const ommitedStory = _.omit(story, ['UserId', 'User.id']);
+      logger.info(ommitedStory);
+      res.status(200).send({
+        success: true,
+        message: 'Story deleted',
+      });
+    })
+    .catch(err => {
+      logger.error(`💥 Failed to delete story : ${err.stack}`);
+      return res.status(500).send({
+        success: false,
+        message: `${err.name} : ${err.message}`,
+      });
+    })
 );
