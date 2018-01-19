@@ -33,7 +33,7 @@ export default (sequelize, DataTypes) => {
       comment: 'metaDatas of story',
     },
   });
-
+  /* eslint func-names:off */
   Stories.associate = function(models) {
     models.Stories.belongsTo(models.Users);
   };
