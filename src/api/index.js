@@ -5,9 +5,13 @@ import { isAuthenticated, initAuth } from '../business/auth';
 import logger from '../logger';
 
 const api = express();
+const helmet = require('helmet');
+const hpp = require('hpp');
+
 initAuth();
 api.use(express.json({ limit: '1mb' }));
-
+api.use(hpp());
+api.use(helmet());
 logger.info(apiStories);
 const apiRoutes = express.Router();
 apiRoutes
