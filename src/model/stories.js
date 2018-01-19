@@ -38,14 +38,5 @@ export default (sequelize, DataTypes) => {
     models.Stories.belongsTo(models.Users);
   };
 
-  Stories.excludeAttributes = ['createdAt', 'updatedAt', 'deletedAt'];
-  Stories.excludeAttributesForResponse = [
-    'createdAt',
-    'updatedAt',
-    'deletedAt',
-    'UserId',
-    'id',
-  ];
-
   return Stories;
 };

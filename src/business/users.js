@@ -61,8 +61,6 @@ export function getUser({ id }) {
 
 export function deleteUser({ id }) {
   return Users.destroy({
-    // TODO : retirer force : true pour faire un delete logique
-    force: true,
     where: {
       id,
     },

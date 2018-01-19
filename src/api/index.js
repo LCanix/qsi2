@@ -1,15 +1,18 @@
 import express from 'express';
 import { apiUsers, apiUsersProtected } from './users';
-import apiStoriesProtected from './stories';
+import { apiStories, apiStoriesProtected } from './stories';
 import { isAuthenticated, initAuth } from '../business/auth';
+import logger from '../logger';
 
 const api = express();
 initAuth();
 api.use(express.json({ limit: '1mb' }));
 
+logger.info(apiStories);
 const apiRoutes = express.Router();
 apiRoutes
   .use('/users', apiUsers)
+  .use('/stories', apiStories)
   // api bellow this middelware require Authorization
   .use(isAuthenticated)
   .use('/users', apiUsersProtected)
